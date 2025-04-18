@@ -70,7 +70,7 @@ window.onload = () => {
 
       const letter = assignments[globalIndex];
       if (letter) {
-        egg.textContent = letter;
+        egg.setAttribute('data-letter', letter);
         updateRevealedLetters(letter);
       }
 

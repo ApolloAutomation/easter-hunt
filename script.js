@@ -108,9 +108,11 @@ window.onload = () => {
       updateProgressBar();
 };
 
-function updateScrambledLetters(revealedLetters) {
+
+function updateScrambledLetters() {
   const scramble = document.getElementById("scrambled");
   const section = document.getElementById("guessSection");
+  const revealedLetters = getRevealedLetters();
 
   if (scramble) {
     scramble.innerText = "Scrambled Letters: " + revealedLetters.join(" ");
@@ -120,6 +122,7 @@ function updateScrambledLetters(revealedLetters) {
     section.style.display = "block";
   }
 }
+
 
 function checkCode() {
   const input = document.getElementById("codeInput")?.value.toUpperCase();

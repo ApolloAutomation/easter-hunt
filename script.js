@@ -97,8 +97,8 @@ function checkCode() {
   const input = document.getElementById("codeInput")?.value.toUpperCase();
   const result = document.getElementById("result");
   if (!result) return;
-  if (input === "BUNNYSQUAD") {
-    result.textContent = "🎉 You got it! Use code BUNNYSQUAD at checkout for 100% off one item!";
+  if (input === atob("QlVOTllTUVVBRA==")) {
+    result.textContent = atob("8J+UpSBZb3UgZ290IGl0ISBVc2UgY29kZSBCVU5OWVNRVUFEIGF0IGNoZWNrb3V0IGZvciAxMDAlIG9mZiBvbmUgaXRlbSE=");
   } else {
     result.textContent = "❌ Oops! That’s not quite right. Try again!";
   }

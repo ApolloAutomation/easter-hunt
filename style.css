@@ -1,33 +1,49 @@
 
 body {
-  font-family: 'Comic Sans MS', cursive, sans-serif;
-  background: #fce4ec;
+  font-family: 'Comic Sans MS', sans-serif;
+  background: linear-gradient(to bottom, #fff8f0, #ffe6f7);
   text-align: center;
-  padding: 2rem;
+  margin: 0;
+  padding: 0;
+}
+header {
+  padding: 10px;
 }
 .logo {
-  width: 80px;
-  margin-bottom: 1rem;
+  height: 60px;
 }
 .egg-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
-  max-width: 400px;
-  margin: 2rem auto;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 15px;
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
 }
 .egg {
-  width: 70px;
-  height: 90px;
-  background: url('egg.png') no-repeat center/contain;
-  cursor: pointer;
-}
-.revealed {
-  background: #fff3cd;
-  font-size: 2rem;
+  width: 80px;
+  height: 100px;
+  background: radial-gradient(circle at center, #ffb6c1 0%, #ff69b4 100%);
+  border-radius: 50% 50% 45% 45%;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.egg:hover {
+  transform: scale(1.1) rotate(-2deg);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+.egg.cracked {
+  background: #dcdcdc;
+  color: #333;
+  transform: rotate(5deg);
   font-weight: bold;
-  border: 2px dashed #f06292;
+}
+footer.map {
+  margin-top: 30px;
+  font-size: 18px;
 }

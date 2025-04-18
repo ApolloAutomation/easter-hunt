@@ -50,8 +50,7 @@ function getRevealedLetters() {
 
 function updateRevealedLetters(letter) {
   let revealed = getRevealedLetters();
-  if (!revealed.includes(letter)) {
-    revealed.push(letter);
+  revealed.push(letter);
     sessionStorage.setItem("revealedLetters", JSON.stringify(revealed));
   }
   return revealed;

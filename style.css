@@ -72,7 +72,7 @@ main {
   color: transparent; /* Hide base text */
 }
 
-.egg.cracked[data-letter]::after {
+.egg.cracked[data-letter]:not([data-letter=""])::after {
   content: attr(data-letter);
   position: absolute;
   top: 50%;
@@ -118,6 +118,6 @@ main {
   100% { transform: translate(-50%, -50%) scale(1); }
 }
 
-.egg.cracked[data-letter]::after {
+.egg.cracked[data-letter]:not([data-letter=""])::after {
   animation: popIn 0.3s ease-out;
 }

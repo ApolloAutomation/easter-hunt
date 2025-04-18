@@ -75,16 +75,16 @@ window.onload = () => {
       }
 
       markEggCracked(globalIndex);
-      maybeShowScrambled(getRevealedLetters());
+      updateScrambledLetters(getRevealedLetters());
     };
 
     grid.appendChild(egg);
   }
 
-  maybeShowScrambled(getRevealedLetters());
+  updateScrambledLetters(getRevealedLetters());
 };
 
-function maybeShowScrambled(revealedLetters) {
+function updateScrambledLetters(revealedLetters) {
   const scramble = document.getElementById("scrambled");
   const section = document.getElementById("guessSection");
   if (revealedLetters.length >= totalLetters.length) {
@@ -101,5 +101,17 @@ function checkCode() {
     result.textContent = "🎉 You got it! Use code YOLKEDUP at checkout for 100% off one item!";
   } else {
     result.textContent = "❌ Oops! That’s not quite right. Try again!";
+  }
+}
+
+
+function updateScrambledLetters(revealedLetters) {
+  const scramble = document.getElementById("scrambled");
+  if (scramble) {
+    scramble.innerText = "Scrambled Letters: " + revealedLetters.join(" ");
+  }
+  const section = document.getElementById("guessSection");
+  if (section && revealedLetters.length >= totalLetters.length) {
+    section.style.display = "block";
   }
 }

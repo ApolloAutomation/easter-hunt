@@ -13,27 +13,39 @@ function shuffleArray(arr) {
 }
 
 
+
+
 function getOrGenerateAssignments() {
   const stored = sessionStorage.getItem("letterAssignments");
   if (stored) {
     try {
-      return JSON.parse(stored);
+      const parsed = JSON.parse(stored);
+      const values = Object.values(parsed).filter(v => typeof v === "string");
+      if (values.length === 10) {
+        return parsed;
+      }
     } catch (e) {
-      // fallback if parse fails
+      // fallback to regeneration
     }
   }
 
-  const shuffledLetters = shuffleArray([...totalLetters]);
-  const positions = shuffleArray(Array.from({ length: allEggCount }, (_, i) => i));
+  const letters = "BUNNYSQUAD".split("");
   const assignments = {};
-  for (let i = 0; i < shuffledLetters.length; i++) {
-    assignments[positions[i]] = shuffledLetters[i];
+
+  for (let page = 0; page < 5; page++) {
+    const baseIndex = page * 30;
+    const positions = shuffleArray(Array.from({ length: 30 }, (_, i) => baseIndex + i));
+    const l1 = letters.shift();
+    const l2 = letters.shift();
+    if (l1) assignments[positions[0]] = l1;
+    if (l2) assignments[positions[1]] = l2;
   }
 
-  const serialized = JSON.stringify(assignments);
-  sessionStorage.setItem("letterAssignments", serialized);
+  sessionStorage.setItem("letterAssignments", JSON.stringify(assignments));
   return assignments;
 }
+
+
 
 
 function getRevealedLetters() {
@@ -86,12 +98,14 @@ window.onload = () => {
 
       markEggCracked(globalIndex);
       updateScrambledLetters(getRevealedLetters());
+      updateProgressBar();
     };
 
     grid.appendChild(egg);
   }
 
   updateScrambledLetters(getRevealedLetters());
+      updateProgressBar();
 };
 
 function updateScrambledLetters(revealedLetters) {
@@ -117,3 +131,19 @@ function checkCode() {
     result.textContent = "❌ Oops! That’s not quite right. Try again!";
   }
 }
+
+
+function updateProgressBar() {
+  const revealed = getRevealedLetters();
+  const total = totalLetters.length;
+  const percent = Math.min(revealed.length / total * 100, 100);
+  const fill = document.getElementById("progressFill");
+  const label = document.getElementById("progressLabel");
+  if (fill) fill.style.width = percent + "%";
+  if (label) label.innerText = `${revealed.length} / ${total} Letters Found`;
+}
+
+// Call this after updates
+window.addEventListener("load", () => {
+  updateProgressBar();
+});

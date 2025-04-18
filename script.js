@@ -5,6 +5,11 @@ const pageName = window.location.pathname.split("/").pop().replace(".html", "");
 const pages = ["forest", "beach", "garden", "countryside", "meadow"];
 const eggIndex = pages.indexOf(pageName) * 10;
 
+// Clear progress on load
+Object.keys(localStorage).forEach(key => {
+  if (key.startsWith("egg_")) localStorage.removeItem(key);
+});
+
 // Shuffle helper
 function shuffleArray(arr) {
   return arr.map(value => ({ value, sort: Math.random() }))
@@ -12,6 +17,7 @@ function shuffleArray(arr) {
             .map(({ value }) => value);
 }
 
+// Assign random letters to 8 random eggs
 function generateRandomAssignments() {
   const shuffledLetters = shuffleArray([...totalLetters]);
   const positions = shuffleArray(Array.from({ length: allEggCount }, (_, i) => i));
@@ -20,6 +26,22 @@ function generateRandomAssignments() {
     assignments[positions[i]] = shuffledLetters[i];
   }
   return assignments;
+}
+
+// Load previously revealed letters from sessionStorage
+function getRevealedLetters() {
+  const data = sessionStorage.getItem("revealedLetters");
+  return data ? JSON.parse(data) : [];
+}
+
+// Save revealed letters to sessionStorage
+function updateRevealedLetters(letter) {
+  let revealed = getRevealedLetters();
+  if (!revealed.includes(letter)) {
+    revealed.push(letter);
+    sessionStorage.setItem("revealedLetters", JSON.stringify(revealed));
+  }
+  return revealed;
 }
 
 window.onload = () => {
@@ -32,15 +54,6 @@ window.onload = () => {
     egg.className = "egg";
     egg.dataset.index = globalIndex;
 
-    const key = `egg_${pageName}_${i}`;
-    const saved = localStorage.getItem(key);
-    const savedLetter = localStorage.getItem(`${key}_letter`);
-
-    if (saved) {
-      egg.classList.add("cracked");
-      if (savedLetter) egg.textContent = atob(savedLetter);
-    }
-
     egg.onclick = () => {
       if (egg.classList.contains("cracked")) return;
       egg.classList.add("cracked", "crack-anim");
@@ -48,30 +61,30 @@ window.onload = () => {
       const letter = assignments[globalIndex];
       if (letter) {
         egg.textContent = letter;
-        localStorage.setItem(`${key}_letter`, btoa(letter));
+        const revealed = updateRevealedLetters(letter);
+        maybeShowScrambled(revealed);
       }
-
-      localStorage.setItem(key, "cracked");
     };
 
     grid.appendChild(egg);
   }
 
-  const revealedLetters = [];
-  Object.keys(localStorage).forEach(k => {
-    if (k.endsWith("_letter")) revealedLetters.push(atob(localStorage.getItem(k)));
-  });
-
-  if (revealedLetters.length >= totalLetters.length) {
-    document.getElementById("scrambled").innerText =
-      "Scrambled Letters: " + revealedLetters.join(" ");
-    document.getElementById("guessSection").style.display = "block";
-  }
+  maybeShowScrambled(getRevealedLetters());
 };
 
+function maybeShowScrambled(revealedLetters) {
+  const scramble = document.getElementById("scrambled");
+  const section = document.getElementById("guessSection");
+  if (revealedLetters.length >= totalLetters.length) {
+    scramble.innerText = "Scrambled Letters: " + revealedLetters.join(" ");
+    if (section) section.style.display = "block";
+  }
+}
+
 function checkCode() {
-  const input = document.getElementById("codeInput").value.toUpperCase();
+  const input = document.getElementById("codeInput")?.value.toUpperCase();
   const result = document.getElementById("result");
+  if (!result) return;
   if (input === "YOLKEDUP") {
     result.textContent = "🎉 You got it! Use code YOLKEDUP at checkout for 100% off one item!";
   } else {

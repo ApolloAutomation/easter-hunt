@@ -44,7 +44,10 @@ window.onload = () => {
       const letter = assignments[globalIndex];
       if (letter) {
         crackedEggs.push(letter);
-        egg.textContent = letter;
+        const span = document.createElement("span");
+        span.className = "letter";
+        span.textContent = letter;
+        egg.appendChild(span);
       }
 
       updateScrambledLetters();

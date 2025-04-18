@@ -12,7 +12,7 @@ header {
   padding: 10px;
 }
 .logo {
-  height: 60px;
+  height: 100px;
 }
 .egg-grid {
   display: grid;
@@ -42,21 +42,17 @@ header {
   box-shadow: 0 6px 12px rgba(0,0,0,0.3);
 }
 .egg.cracked {
-  background: #dcdcdc;
-  color: #333;
-  transform: rotate(5deg);
+  background-image: url('egg-cracked.png');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  font-size: 28px;
   font-weight: bold;
-}
-footer.map {
-  margin-top: 30px;
-  font-size: 18px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+  box-shadow: 0 0 10px rgba(255, 105, 180, 0.4);
+  transform: scale(1.05) rotate(2deg);
 }
 
-footer.map {
-  margin-top: 40px;
-  font-size: 18px;
-  color: #333;
-}
 footer.map a {
   text-decoration: none;
   color: #333;
@@ -100,11 +96,6 @@ body.meadow {
 }
 
 /* Make footer map mobile-friendly */
-footer.map {
-  margin-top: 30px;
-  font-size: 16px;
-  padding: 10px;
-}
 footer.map nav {
   display: flex;
   flex-wrap: wrap;
@@ -129,5 +120,31 @@ main {
   max-width: 90%;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+footer.map {
+  margin-top: 30px;
+  font-size: 16px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  max-width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+footer.map {
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 15px 20px;
+  margin: 30px auto;
+  max-width: 90%;
+  text-align: center;
   box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }

@@ -47,6 +47,11 @@ function markEggCracked(index) {
   sessionStorage.setItem(`cracked_${index}`, "true");
 }
 
+
+// Clear previous session storage for updated code
+sessionStorage.removeItem("letterAssignments");
+sessionStorage.removeItem("revealedLetters");
+
 window.onload = () => {
   const assignments = getOrGenerateAssignments();
   const grid = document.getElementById("eggGrid");

@@ -5,36 +5,31 @@ const pageName = window.location.pathname.split("/").pop().replace(".html", "");
 const pages = ["forest", "beach", "garden", "countryside", "meadow"];
 const eggIndex = pages.indexOf(pageName) * 10;
 
-// Clear progress on load
-Object.keys(localStorage).forEach(key => {
-  if (key.startsWith("egg_")) localStorage.removeItem(key);
-});
-
-// Shuffle helper
 function shuffleArray(arr) {
   return arr.map(value => ({ value, sort: Math.random() }))
             .sort((a, b) => a.sort - b.sort)
             .map(({ value }) => value);
 }
 
-// Assign random letters to 8 random eggs
-function generateRandomAssignments() {
+function getOrGenerateAssignments() {
+  if (sessionStorage.getItem("letterAssignments")) {
+    return JSON.parse(sessionStorage.getItem("letterAssignments"));
+  }
   const shuffledLetters = shuffleArray([...totalLetters]);
   const positions = shuffleArray(Array.from({ length: allEggCount }, (_, i) => i));
   const assignments = {};
   for (let i = 0; i < shuffledLetters.length; i++) {
     assignments[positions[i]] = shuffledLetters[i];
   }
+  sessionStorage.setItem("letterAssignments", JSON.stringify(assignments));
   return assignments;
 }
 
-// Load previously revealed letters from sessionStorage
 function getRevealedLetters() {
   const data = sessionStorage.getItem("revealedLetters");
   return data ? JSON.parse(data) : [];
 }
 
-// Save revealed letters to sessionStorage
 function updateRevealedLetters(letter) {
   let revealed = getRevealedLetters();
   if (!revealed.includes(letter)) {
@@ -44,8 +39,16 @@ function updateRevealedLetters(letter) {
   return revealed;
 }
 
+function isEggCracked(index) {
+  return sessionStorage.getItem(`cracked_${index}`) === "true";
+}
+
+function markEggCracked(index) {
+  sessionStorage.setItem(`cracked_${index}`, "true");
+}
+
 window.onload = () => {
-  const assignments = generateRandomAssignments();
+  const assignments = getOrGenerateAssignments();
   const grid = document.getElementById("eggGrid");
 
   for (let i = 0; i < 10; i++) {
@@ -54,6 +57,13 @@ window.onload = () => {
     egg.className = "egg";
     egg.dataset.index = globalIndex;
 
+    if (isEggCracked(globalIndex)) {
+      egg.classList.add("cracked");
+      if (assignments[globalIndex]) {
+        egg.textContent = assignments[globalIndex];
+      }
+    }
+
     egg.onclick = () => {
       if (egg.classList.contains("cracked")) return;
       egg.classList.add("cracked", "crack-anim");
@@ -61,9 +71,11 @@ window.onload = () => {
       const letter = assignments[globalIndex];
       if (letter) {
         egg.textContent = letter;
-        const revealed = updateRevealedLetters(letter);
-        maybeShowScrambled(revealed);
+        updateRevealedLetters(letter);
       }
+
+      markEggCracked(globalIndex);
+      maybeShowScrambled(getRevealedLetters());
     };
 
     grid.appendChild(egg);

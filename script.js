@@ -6,7 +6,6 @@ const allEggCount = eggsPerPage * pages.length;
 const pageName = window.location.pathname.split("/").pop().replace(".html", "");
 const eggIndex = pages.indexOf(pageName) * eggsPerPage;
 
-// Generate random assignments ON LOAD (no sessionStorage for now)
 function shuffleArray(arr) {
   return arr.map(value => ({ value, sort: Math.random() }))
             .sort((a, b) => a.sort - b.sort)
@@ -14,13 +13,17 @@ function shuffleArray(arr) {
 }
 
 const assignments = (() => {
-  const shuffledLetters = shuffleArray([...totalLetters]);
-  const positions = shuffleArray(Array.from({ length: allEggCount }, (_, i) => i));
-  const result = {};
-  for (let i = 0; i < shuffledLetters.length; i++) {
-    result[positions[i]] = shuffledLetters[i];
+  const letters = [...totalLetters];
+  const assignments = {};
+  for (let page = 0; page < pages.length; page++) {
+    const base = page * eggsPerPage;
+    const positions = shuffleArray(Array.from({ length: eggsPerPage }, (_, i) => base + i));
+    const l1 = letters.shift();
+    const l2 = letters.shift();
+    if (l1) assignments[positions[0]] = l1;
+    if (l2) assignments[positions[1]] = l2;
   }
-  return result;
+  return assignments;
 })();
 
 let crackedEggs = [];
@@ -37,9 +40,13 @@ window.onload = () => {
     egg.onclick = () => {
       if (egg.classList.contains("cracked")) return;
       egg.classList.add("cracked");
-      if (assignments[globalIndex]) {
-        crackedEggs.push(assignments[globalIndex]);
+
+      const letter = assignments[globalIndex];
+      if (letter) {
+        crackedEggs.push(letter);
+        egg.textContent = letter;
       }
+
       updateScrambledLetters();
     };
 

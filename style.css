@@ -6,6 +6,7 @@
   margin-top: 20px;
 }
 .egg {
+  position: relative;
   width: 80px;
   height: 100px;
   margin: 8px;

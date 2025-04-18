@@ -7,8 +7,6 @@ const pageName = window.location.pathname.split("/").pop().replace(".html", "");
 const eggIndex = pages.indexOf(pageName) * eggsPerPage;
 
 // Always start fresh for testing
-sessionStorage.removeItem("letterAssignments");
-sessionStorage.removeItem("revealedLetters");
 
 function shuffleArray(arr) {
   return arr.map(value => ({ value, sort: Math.random() }))

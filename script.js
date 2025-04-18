@@ -51,7 +51,7 @@ window.onload = () => {
   const assignments = getOrGenerateAssignments();
   const grid = document.getElementById("eggGrid");
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 30; i++) {
     const globalIndex = eggIndex + i;
     const egg = document.createElement("div");
     egg.className = "egg";
@@ -97,8 +97,8 @@ function checkCode() {
   const input = document.getElementById("codeInput")?.value.toUpperCase();
   const result = document.getElementById("result");
   if (!result) return;
-  if (input === "YOLKEDUP") {
-    result.textContent = "🎉 You got it! Use code YOLKEDUP at checkout for 100% off one item!";
+  if (input === "BUNNYSQUAD") {
+    result.textContent = "🎉 You got it! Use code BUNNYSQUAD at checkout for 100% off one item!";
   } else {
     result.textContent = "❌ Oops! That’s not quite right. Try again!";
   }

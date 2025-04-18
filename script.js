@@ -76,6 +76,8 @@ function markEggCracked(index) {
 
 window.onload = () => {
   const assignments = getOrGenerateAssignments();
+  updateScrambledLetters(assignments);
+  const assignments = getOrGenerateAssignments();
   const grid = document.getElementById("eggGrid");
 
   for (let i = 0; i < eggsPerPage; i++) {

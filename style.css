@@ -39,17 +39,13 @@ main {
 .egg {
   width: 80px;
   height: 100px;
+  border-radius: 50% 50% 45% 45%;
   background-image: url('egg.png');
   background-size: cover;
   background-position: center;
-  border-radius: 50% 50% 45% 45%;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
   cursor: pointer;
-  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+  transition: transform 0.2s;
 }
 
 .egg:hover {

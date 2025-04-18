@@ -26,29 +26,56 @@ const assignments = (() => {
   return assignments;
 })();
 
-let crackedEggs = [];
+
+let crackedEggs = JSON.parse(localStorage.getItem("crackedEggs") || "[]");
+
+function saveCrackedEgg(index) {
+  if (!crackedEggs.includes(index)) {
+    crackedEggs.push(index);
+    localStorage.setItem("crackedEggs", JSON.stringify(crackedEggs));
+  }
+}
+
 
 window.onload = () => {
   const grid = document.getElementById("eggGrid");
 
-  for (let i = 0; i < eggsPerPage; i++) {
+  
+for (let i = 0; i < eggsPerPage; i++) {
+    const globalIndex = eggIndex + i;
+    const letter = assignments[globalIndex];
+    const crackedAlready = crackedEggs.includes(globalIndex);
+
     const globalIndex = eggIndex + i;
     const egg = document.createElement("div");
+    if (crackedAlready) egg.classList.add("cracked");
     egg.className = "egg";
     egg.dataset.index = globalIndex;
+    if (crackedAlready && letter) {
+      const span = document.createElement("span");
+      span.className = "letter";
+      span.textContent = letter;
+      egg.appendChild(span);
+    }
 
-    egg.onclick = () => {
-      if (egg.classList.contains("cracked")) return;
-      egg.classList.add("cracked");
+    
+egg.onclick = () => {
+  if (egg.classList.contains("cracked")) return;
+  egg.classList.add("cracked");
 
-      const letter = assignments[globalIndex];
-      if (letter) {
-        crackedEggs.push(letter);
-        const span = document.createElement("span");
-        span.className = "letter";
-        span.textContent = letter;
-        egg.appendChild(span);
-      }
+  const letter = assignments[globalIndex];
+  if (letter) {
+    const span = document.createElement("span");
+    span.className = "letter";
+    span.textContent = letter;
+    egg.appendChild(span);
+    crackedEggs.push(letter);
+  }
+
+  saveCrackedEgg(globalIndex);
+  updateScrambledLetters();
+}
+
 
       updateScrambledLetters();
     };

@@ -48,3 +48,22 @@
 .map-button:hover {
   background-color: #2563eb;
 }
+
+.map-nav {
+  text-align: center;
+  margin-top: 40px;
+}
+.map-nav a {
+  display: inline-block;
+  margin: 0 10px;
+  background-color: #3b82f6;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+.map-nav a:hover {
+  background-color: #2563eb;
+}

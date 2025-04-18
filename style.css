@@ -43,9 +43,11 @@ main {
   background-image: url('egg.png');
   background-size: cover;
   background-position: center;
+  box-shadow: 0 0 4px rgba(0,0,0,0.1);
   cursor: pointer;
   position: relative;
   transition: transform 0.2s;
+  margin: 5px;
 }
 
 .egg:hover {

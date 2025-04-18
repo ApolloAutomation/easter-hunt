@@ -101,14 +101,14 @@ window.onload = () => {
       }
 
       markEggCracked(globalIndex);
-      updateScrambledLetters(getRevealedLetters());
+      updateScrambledLetters(assignments);
       updateProgressBar();
     };
 
     grid.appendChild(egg);
   }
 
-  updateScrambledLetters(getRevealedLetters());
+  updateScrambledLetters(assignments);
       updateProgressBar();
 };
 

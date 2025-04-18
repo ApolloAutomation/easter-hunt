@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
 body {
+  font-family: 'Poppins', sans-serif;
   font-family: 'Comic Sans MS', sans-serif;
   background: linear-gradient(to bottom, #fff8f0, #ffe6f7);
   text-align: center;
@@ -64,4 +66,48 @@ footer.map a {
 footer.map a:hover {
   text-decoration: underline;
   color: #ff69b4;
+}
+/* Backgrounds for each themed page */
+body.forest {
+  background: url('bg-forest.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+body.beach {
+  background: url('bg-beach.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+body.garden {
+  background: url('bg-garden.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+body.countryside {
+  background: url('bg-countryside.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+body.meadow {
+  background: url('bg-meadow.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* Ensure scrambled/code section is visible and fits on small screens */
+#scrambled, #guessSection {
+  padding: 20px;
+  max-width: 90%;
+  margin: 20px auto;
+  background: rgba(255,255,255,0.8);
+  border-radius: 10px;
+  backdrop-filter: blur(4px);
+}
+
+/* Make footer map mobile-friendly */
+footer.map {
+  margin-top: 30px;
+  font-size: 16px;
+  padding: 10px;
+}
+footer.map nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
 }

@@ -23,7 +23,9 @@ header {
 .egg {
   width: 80px;
   height: 100px;
-  background: radial-gradient(circle at center, #ffb6c1 0%, #ff69b4 100%);
+  background-image: url('egg.png');
+  background-size: cover;
+  background-position: center;
   border-radius: 50% 50% 45% 45%;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   display: flex;

@@ -53,14 +53,14 @@ function getRevealedLetters() {
   return data ? JSON.parse(data) : [];
 }
 
+
 function updateRevealedLetters(letter) {
   let revealed = getRevealedLetters();
-  if (!revealed.includes(letter)) {
-    revealed.push(letter);
-    sessionStorage.setItem("revealedLetters", JSON.stringify(revealed));
-  }
+  revealed.push(letter);  // always add, even if duplicate
+  sessionStorage.setItem("revealedLetters", JSON.stringify(revealed));
   return revealed;
 }
+
 
 function isEggCracked(index) {
   return sessionStorage.getItem("cracked_" + index) === "true";

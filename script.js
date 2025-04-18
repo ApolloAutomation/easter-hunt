@@ -1,43 +1,48 @@
 
-const totalLetters = "YOLKEDUP".split("");
+const totalLetters = "YOLKEDUP".split(""); // 8 letters
+const allEggCount = 50;
 const pageName = window.location.pathname.split("/").pop().replace(".html", "");
+const pages = ["forest", "beach", "garden", "countryside", "meadow"];
+const eggIndex = pages.indexOf(pageName) * 10;
 
-const letterAssignments = {
-  forest: {2: 0},
-  beach: {4: 1},
-  garden: {1: 2, 7: 3},
-  countryside: {0: 4, 5: 5},
-  meadow: {3: 6, 6: 7}
-};
-
-const letterMap = [
-  "WQ==", "Tw==", "TA==", "Sw==", "RQA=", "RA==", "VQ==", "UA=="
-];
+function generateRandomAssignments() {
+  let positions = Array.from({ length: allEggCount }, (_, i) => i);
+  positions.sort(() => 0.5 - Math.random());
+  const assignments = {};
+  for (let i = 0; i < totalLetters.length; i++) {
+    assignments[positions[i]] = totalLetters[i];
+  }
+  return assignments;
+}
 
 window.onload = () => {
+  const assignments = generateRandomAssignments();
   const grid = document.getElementById("eggGrid");
-  const pageAssignments = letterAssignments[pageName] || {};
 
   for (let i = 0; i < 10; i++) {
+    const globalIndex = eggIndex + i;
     const egg = document.createElement("div");
     egg.className = "egg";
-    egg.dataset.index = i;
+    egg.dataset.index = globalIndex;
+
     const key = `egg_${pageName}_${i}`;
     const saved = localStorage.getItem(key);
     const savedLetter = localStorage.getItem(`${key}_letter`);
 
     if (saved) {
       egg.classList.add("cracked");
-      if (savedLetter) egg.textContent = atob(savedLetter);
+      if (savedLetter) {
+        egg.textContent = atob(savedLetter);
+      }
     }
 
     egg.onclick = () => {
       if (egg.classList.contains("cracked")) return;
-      egg.classList.add("cracked");
-      if (pageAssignments.hasOwnProperty(i)) {
-        const letter = letterMap[pageAssignments[i]];
-        egg.textContent = atob(letter);
-        localStorage.setItem(`${key}_letter`, letter);
+      egg.classList.add("cracked", "crack-anim");
+      const letter = assignments[globalIndex];
+      if (letter) {
+        egg.textContent = letter;
+        localStorage.setItem(`${key}_letter`, btoa(letter));
       }
       localStorage.setItem(key, "cracked");
     };
@@ -50,8 +55,9 @@ window.onload = () => {
     if (k.endsWith("_letter")) revealedLetters.push(atob(localStorage.getItem(k)));
   });
 
-  if (revealedLetters.length >= 8) {
-    document.getElementById("scrambled").innerText = "Scrambled Letters: " + revealedLetters.join(" ");
+  if (revealedLetters.length >= totalLetters.length) {
+    document.getElementById("scrambled").innerText =
+      "Scrambled Letters: " + revealedLetters.join(" ");
     document.getElementById("guessSection").style.display = "block";
   }
 };

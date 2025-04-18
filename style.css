@@ -1,19 +1,32 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
 body {
   font-family: 'Poppins', sans-serif;
-  font-family: 'Comic Sans MS', sans-serif;
-  background: linear-gradient(to bottom, #fff8f0, #ffe6f7);
-  text-align: center;
   margin: 0;
   padding: 0;
+  text-align: center;
 }
+
 header {
   padding: 10px;
 }
+
 .logo {
   height: 100px;
 }
+
+main {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 90%;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
 .egg-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -22,6 +35,7 @@ header {
   max-width: 600px;
   margin: auto;
 }
+
 .egg {
   width: 80px;
   height: 100px;
@@ -37,104 +51,20 @@ header {
   cursor: pointer;
   transition: transform 0.3s, box-shadow 0.3s;
 }
+
 .egg:hover {
   transform: scale(1.1) rotate(-2deg);
   box-shadow: 0 6px 12px rgba(0,0,0,0.3);
 }
+
 .egg.cracked {
-  background-image: url('egg-cracked.png');
+  background-image: url('egg.png');
   background-size: cover;
   background-position: center;
   color: white;
   font-size: 28px;
   font-weight: bold;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-  box-shadow: 0 0 10px rgba(255, 105, 180, 0.4);
-  transform: scale(1.05) rotate(2deg);
-}
-
-footer.map a {
-  text-decoration: none;
-  color: #333;
-  font-weight: bold;
-  padding: 0 5px;
-}
-footer.map a:hover {
-  text-decoration: underline;
-  color: #ff69b4;
-}
-/* Backgrounds for each themed page */
-body.forest {
-  background: url('bg-forest.jpg') no-repeat center center fixed;
-  background-size: cover;
-}
-body.beach {
-  background: url('bg-beach.jpg') no-repeat center center fixed;
-  background-size: cover;
-}
-body.garden {
-  background: url('bg-garden.jpg') no-repeat center center fixed;
-  background-size: cover;
-}
-body.countryside {
-  background: url('bg-countryside.jpg') no-repeat center center fixed;
-  background-size: cover;
-}
-body.meadow {
-  background: url('bg-meadow.jpg') no-repeat center center fixed;
-  background-size: cover;
-}
-
-/* Ensure scrambled/code section is visible and fits on small screens */
-#scrambled, #guessSection {
-  padding: 20px;
-  max-width: 90%;
-  margin: 20px auto;
-  background: rgba(255,255,255,0.8);
-  border-radius: 10px;
-  backdrop-filter: blur(4px);
-}
-
-/* Make footer map mobile-friendly */
-footer.map nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-}
-
-/* Container overlay to improve readability */
-  background: rgba(255, 255, 255, 0.85);
-  border-radius: 15px;
-  padding: 20px;
-  margin: 20px auto;
-  max-width: 90%;
-  box-shadow: 0 0 20px rgba(0,0,0,0.2);
-}
-
-main {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 20px;
-  padding: 20px;
-  margin: 20px auto;
-  max-width: 90%;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 0 20px rgba(0,0,0,0.1);
-}
-
-footer.map {
-  margin-top: 30px;
-  font-size: 16px;
-  padding: 15px;
-  background: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-radius: 15px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  max-width: 90%;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 footer.map {
@@ -147,4 +77,11 @@ footer.map {
   max-width: 90%;
   text-align: center;
   box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+footer.map nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
 }

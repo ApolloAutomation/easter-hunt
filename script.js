@@ -1,9 +1,9 @@
 
-const totalLetters = "YOLKEDUP".split(""); // 8 letters total
-const pageName = window.location.pathname.split("/").pop().replace(".html", ""); // 'forest', 'beach', etc.
+const totalLetters = "YOLKEDUP".split("");
+const pageName = window.location.pathname.split("/").pop().replace(".html", "");
 
 const letterAssignments = {
-  forest: {2: 0},         // egg index: letter index in totalLetters
+  forest: {2: 0},
   beach: {4: 1},
   garden: {1: 2, 7: 3},
   countryside: {0: 4, 5: 5},
@@ -11,14 +11,7 @@ const letterAssignments = {
 };
 
 const letterMap = [
-  "WQ==", // Y
-  "Tw==", // O
-  "TA==", // L
-  "Sw==", // K
-  "RQA=", // E
-  "RA==", // D
-  "VQ==", // U
-  "UA=="  // P
+  "WQ==", "Tw==", "TA==", "Sw==", "RQA=", "RA==", "VQ==", "UA=="
 ];
 
 window.onload = () => {
@@ -29,41 +22,32 @@ window.onload = () => {
     const egg = document.createElement("div");
     egg.className = "egg";
     egg.dataset.index = i;
-
     const key = `egg_${pageName}_${i}`;
     const saved = localStorage.getItem(key);
     const savedLetter = localStorage.getItem(`${key}_letter`);
 
     if (saved) {
       egg.classList.add("cracked");
-      if (savedLetter) {
-        egg.textContent = atob(savedLetter);
-      }
+      if (savedLetter) egg.textContent = atob(savedLetter);
     }
 
     egg.onclick = () => {
       if (egg.classList.contains("cracked")) return;
       egg.classList.add("cracked");
-
       if (pageAssignments.hasOwnProperty(i)) {
-        const letterIdx = pageAssignments[i];
-        const letter = letterMap[letterIdx];
+        const letter = letterMap[pageAssignments[i]];
         egg.textContent = atob(letter);
         localStorage.setItem(`${key}_letter`, letter);
       }
-
       localStorage.setItem(key, "cracked");
     };
 
     grid.appendChild(egg);
   }
 
-  // Show scrambled letters
   const revealedLetters = [];
   Object.keys(localStorage).forEach(k => {
-    if (k.endsWith("_letter")) {
-      revealedLetters.push(atob(localStorage.getItem(k)));
-    }
+    if (k.endsWith("_letter")) revealedLetters.push(atob(localStorage.getItem(k)));
   });
 
   if (revealedLetters.length >= 8) {

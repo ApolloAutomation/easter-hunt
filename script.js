@@ -1,16 +1,23 @@
 
-const totalLetters = "YOLKEDUP".split(""); // 8 letters
+const totalLetters = "YOLKEDUP".split("");
 const allEggCount = 50;
 const pageName = window.location.pathname.split("/").pop().replace(".html", "");
 const pages = ["forest", "beach", "garden", "countryside", "meadow"];
 const eggIndex = pages.indexOf(pageName) * 10;
 
+// Shuffle helper
+function shuffleArray(arr) {
+  return arr.map(value => ({ value, sort: Math.random() }))
+            .sort((a, b) => a.sort - b.sort)
+            .map(({ value }) => value);
+}
+
 function generateRandomAssignments() {
-  let positions = Array.from({ length: allEggCount }, (_, i) => i);
-  positions.sort(() => 0.5 - Math.random());
+  const shuffledLetters = shuffleArray([...totalLetters]);
+  const positions = shuffleArray(Array.from({ length: allEggCount }, (_, i) => i));
   const assignments = {};
-  for (let i = 0; i < totalLetters.length; i++) {
-    assignments[positions[i]] = totalLetters[i];
+  for (let i = 0; i < shuffledLetters.length; i++) {
+    assignments[positions[i]] = shuffledLetters[i];
   }
   return assignments;
 }
@@ -31,19 +38,19 @@ window.onload = () => {
 
     if (saved) {
       egg.classList.add("cracked");
-      if (savedLetter) {
-        egg.textContent = atob(savedLetter);
-      }
+      if (savedLetter) egg.textContent = atob(savedLetter);
     }
 
     egg.onclick = () => {
       if (egg.classList.contains("cracked")) return;
       egg.classList.add("cracked", "crack-anim");
+
       const letter = assignments[globalIndex];
       if (letter) {
         egg.textContent = letter;
         localStorage.setItem(`${key}_letter`, btoa(letter));
       }
+
       localStorage.setItem(key, "cracked");
     };
 

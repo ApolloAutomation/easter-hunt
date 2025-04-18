@@ -111,3 +111,13 @@ footer.map nav {
   justify-content: center;
   gap: 8px;
 }
+
+/* Container overlay to improve readability */
+main {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 15px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 90%;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}

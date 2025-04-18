@@ -1,15 +1,8 @@
 
 const totalLetters = "YOLKEDUP".split(""); // 8 letters total
 const pageName = window.location.pathname.split("/").pop().replace(".html", ""); // 'forest', 'beach', etc.
-const lettersPerPage = {
-  forest: [],
-  beach: [],
-  garden: [],
-  countryside: [],
-  meadow: []
-};
 
-// Assign letter positions across pages
+// Define which eggs on which page get real letters (by index)
 const letterPositions = {
   forest: [2],
   beach: [4],
@@ -18,7 +11,7 @@ const letterPositions = {
   meadow: [3, 6]
 };
 
-// Decode letters from base64
+// Map letter index to base64-encoded letter values
 const letterMap = {
   0: "WQ==", // Y
   1: "Tw==", // O
@@ -32,28 +25,38 @@ const letterMap = {
 
 window.onload = () => {
   const grid = document.getElementById("eggGrid");
+  const thisPagePositions = letterPositions[pageName] || [];
+  const allAssignedIndices = Object.values(letterPositions).flat();
+
   for (let i = 0; i < 10; i++) {
     const egg = document.createElement("div");
     egg.className = "egg";
     egg.dataset.index = i;
+
     const key = `egg_${pageName}_${i}`;
     const saved = localStorage.getItem(key);
+    const savedLetter = localStorage.getItem(`${key}_letter`);
+
     if (saved) {
       egg.classList.add("cracked");
-      const content = localStorage.getItem(`${key}_letter`);
-      if (content) egg.textContent = atob(content);
+      if (savedLetter) {
+        egg.textContent = atob(savedLetter);
+      }
     }
 
     egg.onclick = () => {
       if (egg.classList.contains("cracked")) return;
       egg.classList.add("cracked");
-      const eggIndex = parseInt(egg.dataset.index);
-      const globalIndex = letterPositions[pageName]?.indexOf(eggIndex);
-      if (globalIndex !== -1 && globalIndex !== undefined) {
-        const letter = letterMap[totalLetters.indexOf("YOLKEDUP"[Object.keys(letterPositions).flatMap(p => letterPositions[p]).indexOf(eggIndex)])];
+
+      // Is this egg one that should contain a letter?
+      if (thisPagePositions.includes(i)) {
+        // Find its global letter index based on all flattened letter positions
+        const flatIndex = allAssignedIndices.indexOf(i);
+        const letter = letterMap[flatIndex];
         egg.textContent = atob(letter);
         localStorage.setItem(`${key}_letter`, letter);
       }
+
       localStorage.setItem(key, "cracked");
     };
 

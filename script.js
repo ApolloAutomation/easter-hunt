@@ -76,8 +76,6 @@ function markEggCracked(index) {
 
 window.onload = () => {
   const assignments = getOrGenerateAssignments();
-  updateScrambledLetters(assignments);
-  const assignments = getOrGenerateAssignments();
   const grid = document.getElementById("eggGrid");
 
   for (let i = 0; i < eggsPerPage; i++) {
@@ -103,14 +101,14 @@ window.onload = () => {
       }
 
       markEggCracked(globalIndex);
-      updateScrambledLetters(assignments);
+      updateScrambledLetters(getRevealedLetters());
       updateProgressBar();
     };
 
     grid.appendChild(egg);
   }
 
-  updateScrambledLetters(assignments);
+  updateScrambledLetters(getRevealedLetters());
       updateProgressBar();
 };
 

@@ -12,9 +12,16 @@ function shuffleArray(arr) {
             .map(({ value }) => value);
 }
 
+
 function getOrGenerateAssignments() {
   const stored = sessionStorage.getItem("letterAssignments");
-  if (stored) return JSON.parse(stored);
+  if (stored) {
+    try {
+      return JSON.parse(stored);
+    } catch (e) {
+      // fallback if parse fails
+    }
+  }
 
   const shuffledLetters = shuffleArray([...totalLetters]);
   const positions = shuffleArray(Array.from({ length: allEggCount }, (_, i) => i));
@@ -23,9 +30,11 @@ function getOrGenerateAssignments() {
     assignments[positions[i]] = shuffledLetters[i];
   }
 
-  sessionStorage.setItem("letterAssignments", JSON.stringify(assignments));
+  const serialized = JSON.stringify(assignments);
+  sessionStorage.setItem("letterAssignments", serialized);
   return assignments;
 }
+
 
 function getRevealedLetters() {
   const data = sessionStorage.getItem("revealedLetters");

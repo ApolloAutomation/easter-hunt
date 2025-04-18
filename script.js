@@ -74,7 +74,10 @@ function markEggCracked(index) {
   sessionStorage.setItem("cracked_" + index, "true");
 }
 
+let assignments;
+
 window.onload = () => {
+  assignments = getOrGenerateAssignments();
   const assignments = getOrGenerateAssignments();
   const grid = document.getElementById("eggGrid");
 

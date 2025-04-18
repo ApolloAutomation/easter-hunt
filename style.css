@@ -1,0 +1,33 @@
+
+body {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  background: #fce4ec;
+  text-align: center;
+  padding: 2rem;
+}
+.logo {
+  width: 80px;
+  margin-bottom: 1rem;
+}
+.egg-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  max-width: 400px;
+  margin: 2rem auto;
+}
+.egg {
+  width: 70px;
+  height: 90px;
+  background: url('egg.png') no-repeat center/contain;
+  cursor: pointer;
+}
+.revealed {
+  background: #fff3cd;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  border: 2px dashed #f06292;
+}

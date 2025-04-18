@@ -6,14 +6,11 @@ const eggsPerPage = 30;
 const pageName = window.location.pathname.split("/").pop().replace(".html", "");
 const eggIndex = pages.indexOf(pageName) * eggsPerPage;
 
-// Always start fresh for testing
-
 function shuffleArray(arr) {
   return arr.map(value => ({ value, sort: Math.random() }))
             .sort((a, b) => a.sort - b.sort)
             .map(({ value }) => value);
 }
-
 
 function getOrGenerateAssignments() {
   const stored = sessionStorage.getItem("letterAssignments");
@@ -26,11 +23,9 @@ function getOrGenerateAssignments() {
     assignments[positions[i]] = shuffledLetters[i];
   }
 
-  const assignmentsJSON = JSON.stringify(assignments);
-  sessionStorage.setItem("letterAssignments", assignmentsJSON);
+  sessionStorage.setItem("letterAssignments", JSON.stringify(assignments));
   return assignments;
 }
-
 
 function getRevealedLetters() {
   const data = sessionStorage.getItem("revealedLetters");
@@ -66,9 +61,8 @@ window.onload = () => {
 
     if (isEggCracked(globalIndex)) {
       egg.classList.add("cracked");
-      if (assignments[globalIndex]) {
-        egg.setAttribute("data-letter", assignments[globalIndex]);
-      }
+      const letter = assignments[globalIndex];
+      if (letter) egg.setAttribute("data-letter", letter);
     }
 
     egg.onclick = () => {

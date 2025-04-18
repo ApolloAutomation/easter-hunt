@@ -48,17 +48,21 @@ function getOrGenerateAssignments() {
 
 
 
-function getRevealedLetters() {
-  const data = sessionStorage.getItem("revealedLetters");
+
+function getCrackedIndexes() {
+  const data = sessionStorage.getItem("crackedEggIndexes");
   return data ? JSON.parse(data) : [];
 }
 
 
-function updateRevealedLetters(letter) {
-  let revealed = getRevealedLetters();
-  revealed.push(letter);  // always add, even if duplicate
-  sessionStorage.setItem("revealedLetters", JSON.stringify(revealed));
-  return revealed;
+
+function updateCrackedIndexes(index) {
+  let cracked = getCrackedIndexes();
+  if (!cracked.includes(index)) {
+    cracked.push(index);
+    sessionStorage.setItem("crackedEggIndexes", JSON.stringify(cracked));
+  }
+  return cracked;
 }
 
 
@@ -93,7 +97,7 @@ window.onload = () => {
       const letter = assignments[globalIndex];
       if (letter) {
         egg.setAttribute("data-letter", letter);
-        updateRevealedLetters(letter);
+        updateCrackedIndexes(globalIndex);
       }
 
       markEggCracked(globalIndex);
@@ -108,11 +112,9 @@ window.onload = () => {
       updateProgressBar();
 };
 
-
-function updateScrambledLetters() {
+function updateScrambledLetters(revealedLetters) {
   const scramble = document.getElementById("scrambled");
   const section = document.getElementById("guessSection");
-  const revealedLetters = getRevealedLetters();
 
   if (scramble) {
     scramble.innerText = "Scrambled Letters: " + revealedLetters.join(" ");
@@ -122,7 +124,6 @@ function updateScrambledLetters() {
     section.style.display = "block";
   }
 }
-
 
 function checkCode() {
   const input = document.getElementById("codeInput")?.value.toUpperCase();

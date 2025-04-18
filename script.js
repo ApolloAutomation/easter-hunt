@@ -14,16 +14,23 @@ function shuffleArray(arr) {
             .map(({ value }) => value);
 }
 
+
 function getOrGenerateAssignments() {
+  const stored = sessionStorage.getItem("letterAssignments");
+  if (stored) return JSON.parse(stored);
+
   const shuffledLetters = shuffleArray([...totalLetters]);
   const positions = shuffleArray(Array.from({ length: allEggCount }, (_, i) => i));
   const assignments = {};
   for (let i = 0; i < shuffledLetters.length; i++) {
     assignments[positions[i]] = shuffledLetters[i];
   }
-  sessionStorage.setItem("letterAssignments", JSON.stringify(assignments));
+
+  const assignmentsJSON = JSON.stringify(assignments);
+  sessionStorage.setItem("letterAssignments", assignmentsJSON);
   return assignments;
 }
+
 
 function getRevealedLetters() {
   const data = sessionStorage.getItem("revealedLetters");

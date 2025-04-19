@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Beach | Easter Egg Hunt</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="beach">
+  <header>
+    <a href="https://apolloautomation.com/" target="_blank" rel="noopener">
+      <img src="apollo-logo.png" alt="Apollo Automation Logo" class="logo" />
+    </a>
+  </header>
+  <main>
+    <div id="eggGrid" class="egg-grid"></div>
+    <div id="scrambled"></div>
+    <div id="guessSection" style="display:none;">
+      <input type="text" id="codeInput" placeholder="Enter the code..." />
+      <button onclick="checkCode()">Submit</button>
+      <p id="result"></p>
+    </div>
+  </main>
+  <footer class="map">
+    <nav>
+      <a href="forest.html">🏞️ Forest</a> |
+      <a href="beach.html">🏖️ Beach</a> |
+      <a href="garden.html">🌷 Garden</a> |
+      <a href="countryside.html">🚜 Countryside</a> |
+      <a href="meadow.html">🌼 Meadow</a>
+    </nav>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>

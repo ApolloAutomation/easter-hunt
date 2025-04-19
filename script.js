@@ -98,7 +98,7 @@ function checkCode() {
   const result = document.getElementById("result");
   if (!result) return;
   if (input === "YOLKEDUP") {
-    result.textContent = "🎉 You got it! Use code YOLKEDUP at checkout for 100% off one item!";
+    result.innerHTML = "🎉 You got it! Thanks for playing and Happy Easter. Please <a href='https://dyno.gg/giveaway/b64bbf75' target='_blank'>click here</a> to enter in our giveaway to win a free sensor of your choice (air-1 excluded).";
   } else {
     result.textContent = "❌ Oops! That’s not quite right. Try again!";
   }

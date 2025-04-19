@@ -98,7 +98,7 @@ function checkCode() {
   const result = document.getElementById("result");
   if (!result) return;
   if (input === "YOLKEDUP") {
-    result.innerHTML = "🎉 You got it! Thanks for playing and Happy Easter. Please <a href='https://dyno.gg/giveaway/b64bbf75' target='_blank'>click here</a> to enter in our giveaway to win a free sensor of your choice (air-1 excluded).";
+    result.innerHTML = "🎉 You got it! Thanks for playing and Happy Easter. Please <a href='https://dyno.gg/giveaway/8eeabf37' target='_blank'>click here</a> to enter in our giveaway to win a free sensor of your choice (air-1 excluded).";
   } else {
     result.textContent = "❌ Oops! That’s not quite right. Try again!";
   }

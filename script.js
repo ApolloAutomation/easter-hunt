@@ -1,10 +1,9 @@
 
-const totalLetters = "BUNNYSQUAD".split("");
-const pages = ["forest", "beach", "garden", "countryside", "meadow"];
-const eggsPerPage = 30;
-const allEggCount = eggsPerPage * pages.length;
+const totalLetters = "YOLKEDUP".split("");
+const allEggCount = 50;
 const pageName = window.location.pathname.split("/").pop().replace(".html", "");
-const eggIndex = pages.indexOf(pageName) * eggsPerPage;
+const pages = ["forest", "beach", "garden", "countryside", "meadow"];
+const eggIndex = pages.indexOf(pageName) * 10;
 
 function shuffleArray(arr) {
   return arr.map(value => ({ value, sort: Math.random() }))
@@ -12,79 +11,107 @@ function shuffleArray(arr) {
             .map(({ value }) => value);
 }
 
-const assignments = (() => {
-  const letters = [...totalLetters];
+function getOrGenerateAssignments() {
+  if (sessionStorage.getItem("letterAssignments")) {
+    return JSON.parse(sessionStorage.getItem("letterAssignments"));
+  }
+  const shuffledLetters = shuffleArray([...totalLetters]);
+  const positions = shuffleArray(Array.from({ length: allEggCount }, (_, i) => i));
   const assignments = {};
-  for (let page = 0; page < pages.length; page++) {
-    const base = page * eggsPerPage;
-    const positions = shuffleArray(Array.from({ length: eggsPerPage }, (_, i) => base + i));
-    const l1 = letters.shift();
-    const l2 = letters.shift();
-    if (l1) assignments[positions[0]] = l1;
-    if (l2) assignments[positions[1]] = l2;
+  for (let i = 0; i < shuffledLetters.length; i++) {
+    assignments[positions[i]] = shuffledLetters[i];
   }
+  sessionStorage.setItem("letterAssignments", JSON.stringify(assignments));
   return assignments;
-})();
-
-
-let crackedEggs = JSON.parse(localStorage.getItem("crackedEggs") || "[]");
-
-function saveCrackedEgg(index) {
-  if (!crackedEggs.includes(index)) {
-    crackedEggs.push(index);
-    localStorage.setItem("crackedEggs", JSON.stringify(crackedEggs));
-  }
 }
 
+function getRevealedLetters() {
+  const data = sessionStorage.getItem("revealedLetters");
+  return data ? JSON.parse(data) : [];
+}
+
+function updateRevealedLetters(letter) {
+  let revealed = getRevealedLetters();
+  if (!revealed.includes(letter)) {
+    revealed.push(letter);
+    sessionStorage.setItem("revealedLetters", JSON.stringify(revealed));
+  }
+  return revealed;
+}
+
+function isEggCracked(index) {
+  return sessionStorage.getItem(`cracked_${index}`) === "true";
+}
+
+function markEggCracked(index) {
+  sessionStorage.setItem(`cracked_${index}`, "true");
+}
 
 window.onload = () => {
+  const assignments = getOrGenerateAssignments();
   const grid = document.getElementById("eggGrid");
 
-  
-for (let i = 0; i < eggsPerPage; i++) {
-    const globalIndex = eggIndex + i;
-    const letter = assignments[globalIndex];
-    const crackedAlready = crackedEggs.includes(globalIndex);
-
+  for (let i = 0; i < 10; i++) {
     const globalIndex = eggIndex + i;
     const egg = document.createElement("div");
-    if (crackedAlready) egg.classList.add("cracked");
     egg.className = "egg";
     egg.dataset.index = globalIndex;
-    if (crackedAlready && letter) {
-      const span = document.createElement("span");
-      span.className = "letter";
-      span.textContent = letter;
-      egg.appendChild(span);
+
+    if (isEggCracked(globalIndex)) {
+      egg.classList.add("cracked");
+      if (assignments[globalIndex]) {
+        egg.textContent = assignments[globalIndex];
+      }
     }
 
-    
-egg.onclick = () => {
-  if (egg.classList.contains("cracked")) return;
-  egg.classList.add("cracked");
+    egg.onclick = () => {
+      if (egg.classList.contains("cracked")) return;
+      egg.classList.add("cracked", "crack-anim");
 
-  const letter = assignments[globalIndex];
-  if (letter) {
-    const span = document.createElement("span");
-    span.className = "letter";
-    span.textContent = letter;
-    egg.appendChild(span);
-    crackedEggs.push(letter);
-  }
+      const letter = assignments[globalIndex];
+      if (letter) {
+        if (letter) egg.setAttribute('data-letter', letter);
+        updateRevealedLetters(letter);
+      }
 
-  saveCrackedEgg(globalIndex);
-  updateScrambledLetters();
-}
-
-
-      updateScrambledLetters();
+      markEggCracked(globalIndex);
+      updateScrambledLetters(getRevealedLetters());
     };
 
     grid.appendChild(egg);
   }
+
+  updateScrambledLetters(getRevealedLetters());
 };
 
-function updateScrambledLetters() {
+function updateScrambledLetters(revealedLetters) {
   const scramble = document.getElementById("scrambled");
-  scramble.innerText = "Scrambled Letters: " + crackedEggs.join(" ");
+  const section = document.getElementById("guessSection");
+  if (revealedLetters.length >= totalLetters.length) {
+    scramble.innerText = "Scrambled Letters: " + revealedLetters.join(" ");
+    if (section) section.style.display = "block";
+  }
+}
+
+function checkCode() {
+  const input = document.getElementById("codeInput")?.value.toUpperCase();
+  const result = document.getElementById("result");
+  if (!result) return;
+  if (input === "YOLKEDUP") {
+    result.textContent = "🎉 You got it! Use code YOLKEDUP at checkout for 100% off one item!";
+  } else {
+    result.textContent = "❌ Oops! That’s not quite right. Try again!";
+  }
+}
+
+
+function updateScrambledLetters(revealedLetters) {
+  const scramble = document.getElementById("scrambled");
+  if (scramble) {
+    scramble.innerText = "Scrambled Letters: " + revealedLetters.join(" ");
+  }
+  const section = document.getElementById("guessSection");
+  if (section && revealedLetters.length >= totalLetters.length) {
+    section.style.display = "block";
+  }
 }

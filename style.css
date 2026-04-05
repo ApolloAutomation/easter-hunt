@@ -1,49 +1,133 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
+/* ── Base ── */
 body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
   padding: 0;
   text-align: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
+/* ── Location backgrounds ── */
+body.forest      { background-image: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('bg-forest.jpg'); }
+body.beach       { background-image: linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.25)), url('bg-beach.jpg'); }
+body.garden      { background-image: linear-gradient(rgba(0,0,0,0.3),  rgba(0,0,0,0.3)),  url('bg-garden.jpg'); }
+body.countryside { background-image: linear-gradient(rgba(0,0,0,0.3),  rgba(0,0,0,0.3)),  url('bg-countryside.jpg'); }
+body.meadow      { background-image: linear-gradient(rgba(0,0,0,0.3),  rgba(0,0,0,0.3)),  url('bg-meadow.jpg'); }
+
+/* ── Header ── */
 header {
-  padding: 10px;
+  padding: 16px;
 }
 
 .logo {
-  height: 100px;
+  height: 80px;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
 }
 
+/* ── Main card ── */
 main {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 20px;
-  padding: 20px;
-  margin: 20px auto;
-  max-width: 90%;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  background: rgba(15, 15, 30, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  padding: 28px 20px;
+  margin: 10px auto 20px;
+  max-width: 680px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
 }
 
+/* ── Scrambled letters ── */
+#scrambled {
+  color: #e2e8f0;
+  font-size: 1.1em;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin: 12px 0;
+  min-height: 1.5em;
+}
+
+/* ── Guess section ── */
+#guessSection {
+  margin-top: 20px;
+}
+
+#guessSection input {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1em;
+  padding: 10px 16px;
+  border: 2px solid rgba(255,255,255,0.2);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  outline: none;
+  width: 180px;
+  text-align: center;
+  transition: border-color 0.2s;
+}
+
+#guessSection input::placeholder {
+  color: rgba(255,255,255,0.4);
+}
+
+#guessSection input:focus {
+  border-color: rgba(255,255,255,0.5);
+}
+
+#guessSection button {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1em;
+  font-weight: 600;
+  padding: 10px 22px;
+  margin-left: 8px;
+  background: linear-gradient(135deg, #f97316, #ec4899);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+#guessSection button:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+#result {
+  margin-top: 14px;
+  font-size: 1.05em;
+  font-weight: 600;
+  color: #fde68a;
+  min-height: 1.4em;
+}
+
+/* ── Egg grid ── */
 .egg-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 15px;
-  padding: 20px;
+  gap: 10px;
+  padding: 16px;
   max-width: 600px;
   margin: auto;
+  box-sizing: border-box;
 }
 
 .egg {
-  width: 80px;
-  height: 100px;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  height: auto;
   background-image: url('egg.png');
   background-size: cover;
   background-position: center;
   border-radius: 50% 50% 45% 45%;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -54,10 +138,8 @@ main {
 
 .egg:hover {
   transform: scale(1.1) rotate(-2deg);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.5);
 }
-
-
 
 .egg.cracked {
   background-image: url('egg-cracked.png');
@@ -65,11 +147,11 @@ main {
   background-position: center;
   font-size: 28px;
   font-weight: bold;
-  box-shadow: 0 0 10px rgba(255, 105, 180, 0.4);
+  box-shadow: 0 0 12px rgba(255, 105, 180, 0.5);
   transform: scale(1.05) rotate(2deg);
   animation: eggCrack 0.4s ease forwards;
   position: relative;
-  color: transparent; /* Hide base text */
+  color: transparent;
 }
 
 .egg.cracked[data-letter]:not([data-letter=""])::after {
@@ -89,8 +171,8 @@ main {
      1px -1px 0 #fff,
     -1px  1px 0 #fff,
      1px  1px 0 #fff;
+  animation: popIn 0.3s ease-out;
 }
-
 
 .egg.cracked::after {
   content: attr(data-letter);
@@ -106,18 +188,80 @@ main {
   color: #000;
 }
 
-
 .egg.crack-anim {
   animation: eggCrack 0.4s ease forwards;
 }
 
+/* ── Footer nav ── */
+footer.map {
+  padding: 14px 10px 20px;
+}
 
+footer.map nav {
+  display: inline-flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+  background: rgba(15, 15, 30, 0.6);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 50px;
+  padding: 10px 20px;
+  backdrop-filter: blur(10px);
+}
+
+footer.map nav a {
+  color: #e2e8f0;
+  text-decoration: none;
+  font-size: 0.9em;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  transition: background 0.2s, color 0.2s;
+}
+
+footer.map nav a:hover {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+}
+
+footer.map nav span {
+  color: rgba(255,255,255,0.2);
+  line-height: 1.8;
+}
+
+/* ── Animations ── */
 @keyframes popIn {
   0%   { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
   60%  { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
   100% { transform: translate(-50%, -50%) scale(1); }
 }
 
-.egg.cracked[data-letter]:not([data-letter=""])::after {
-  animation: popIn 0.3s ease-out;
+@keyframes eggCrack {
+  0%   { transform: scale(1) rotate(0deg); }
+  30%  { transform: scale(1.15) rotate(-5deg); }
+  60%  { transform: scale(0.95) rotate(3deg); }
+  100% { transform: scale(1.05) rotate(2deg); }
+}
+
+/* ---- Next location button ---- */
+.next-location {
+  margin-top: 20px;
+}
+
+.next-btn {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1em;
+  font-weight: 600;
+  padding: 12px 28px;
+  background: linear-gradient(135deg, #10b981, #3b82f6);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.next-btn:hover {
+  opacity: 0.88;
+  transform: translateY(-2px);
 }

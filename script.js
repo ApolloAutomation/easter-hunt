@@ -1,5 +1,5 @@
 
-const totalLetters = "YOLKEDUP".split("");
+const totalLetters = "BUNNY".split("");
 const allEggCount = 50;
 const pageName = window.location.pathname.split("/").pop().replace(".html", "");
 const pages = ["forest", "beach", "garden", "countryside", "meadow"];
@@ -32,10 +32,8 @@ function getRevealedLetters() {
 
 function updateRevealedLetters(letter) {
   let revealed = getRevealedLetters();
-  if (!revealed.includes(letter)) {
-    revealed.push(letter);
-    sessionStorage.setItem("revealedLetters", JSON.stringify(revealed));
-  }
+  revealed.push(letter);
+  sessionStorage.setItem("revealedLetters", JSON.stringify(revealed));
   return revealed;
 }
 
@@ -97,8 +95,8 @@ function checkCode() {
   const input = document.getElementById("codeInput")?.value.toUpperCase();
   const result = document.getElementById("result");
   if (!result) return;
-  if (input === "YOLKEDUP") {
-    result.innerHTML = "🎉 You got it! Thanks for playing and Happy Easter. Please <a href='https://dyno.gg/giveaway/8eeabf37' target='_blank'>click here</a> to enter in our giveaway to win a free sensor of your choice (air-1 excluded).";
+  if (input === "BUNNY") {
+    result.innerHTML = "🐰 Happy Easter from all of us at Apollo Automation! You found the secret word! The winner will get to choose one of the following sensors: MSR-2, MTR-1, PLT-1, or TEMP-1. Comment on <a href='REDDIT_LINK_PLACEHOLDER' target='_blank' rel='noopener'>this Reddit post</a> to enter! The giveaway will end on April 6th at noon EST and a random winner will be chosen using rdtpicker.com.";
   } else {
     result.textContent = "❌ Oops! That’s not quite right. Try again!";
   }
